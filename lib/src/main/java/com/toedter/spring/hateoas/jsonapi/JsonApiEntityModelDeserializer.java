@@ -122,6 +122,14 @@ class JsonApiEntityModelDeserializer extends AbstractJsonApiModelDeserializer<En
                                         }
 
                                         field.set(object, relationshipCollection);
+                                    } else {
+                                        field.set(
+                                                object,
+                                                objectMapper.convertValue(
+                                                        ((HashMap<?, ?>) relationship).get("data"),
+                                                        objectMapper.constructType(genericType)
+                                                )
+                                        );
                                     }
                                 } else {
                                     // we expect a concrete type otherwise, like "Director"
